@@ -3,7 +3,7 @@ OBJS_DIR=objects/
 HEADERS=headers/
 SRCS=ft_printf.c ft_output_maths.c ft_output_str.c
 OBJS=$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
-CC=cc
+CC=gcc
 CFLAGS=-Werror -Wall -Wextra
 NAME=libftprintf.a
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mperrine <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2025/11/03 10:24:36 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/03 23:20:26 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		ft_printf(const char *format, ...);
-int		ft_parse_specifiers(const char c, va_list args, int *size, int *i);
-int		ft_putnbr_unsigned(unsigned int nb, int *size);
-int		ft_puthexa(unsigned int nb, const char *base, int *size);
-int		ft_putpointer(unsigned long int ptr, int *size);
-int		ft_putpointer_address(unsigned long int ptr, int *size);
-int		ft_putnbr(int n, int *size);
-int		ft_putstr(char *s, int *size);
-int		ft_putchar(char c, int *size);
+typedef struct s_ft_printf
+{
+	va_list	*args;
+	size_t	printed;
+	int		res;
+}			t_ft_printf;
+
+int			ft_printf(const char *format, ...);
+
+void		ft_putstr(char *s, t_ft_printf *data);
+void		ft_putchar(char c, t_ft_printf *data);
+void		ft_putnbr(int nb, t_ft_printf *data);
+void		ft_putpointer(unsigned long int ptr, t_ft_printf *data);
+void		ft_putnbr_unsigned(unsigned int nb, t_ft_printf *data);
+void		ft_puthexa(unsigned int nb, int type, t_ft_printf *data);
 
 #endif

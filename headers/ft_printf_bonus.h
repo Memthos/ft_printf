@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/03 23:35:07 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/05 00:23:43 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_flags
+{
+	int		left;
+	int		sign;
+	int		space;
+	int		zero;
+	int		alt;
+	size_t	wdt;
+	size_t	prec;
+}			t_flags;
+
 typedef struct s_ft_printf
 {
 	va_list	*args;
 	size_t	printed;
 	int		res;
+	t_flags	flags;
 }			t_ft_printf;
 
 int			ft_printf(const char *format, ...);

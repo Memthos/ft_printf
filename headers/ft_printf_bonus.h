@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/05 00:23:43 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/05 11:19:38 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_flags
 {
-	int		left;
-	int		sign;
-	int		space;
-	int		zero;
-	int		alt;
+	size_t	left;
+	size_t	sign;
+	size_t	space;
+	size_t	zero;
+	size_t	alt;
 	size_t	wdt;
 	size_t	prec;
 }			t_flags;
@@ -35,6 +36,13 @@ typedef struct s_ft_printf
 	int		res;
 	t_flags	flags;
 }			t_ft_printf;
+
+typedef enum e_codes
+{
+	SUCCESS,
+	ERROR,
+	CONVERSION,
+}	t_codes;
 
 int			ft_printf(const char *format, ...);
 

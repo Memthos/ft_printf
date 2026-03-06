@@ -6,11 +6,32 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/05 13:32:18 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:49:05 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/ft_printf_bonus.h"
+
+void	ft_putstr(char *s, t_ft_printf *data)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+	{
+		ft_putstr("(null)", data);
+		return ;
+	}
+	while (s[i])
+	{
+		if (write(1, s[i++], 1) == -1)
+		{
+			data->res = 1;
+			break ;
+		}
+		data->printed += 1;
+	}
+}
 
 static int	is_flag(char c)
 {
@@ -30,17 +51,13 @@ static void	set_flag(size_t	*param, int value, size_t *idx)
 int	ft_atoi(const char *format, int *i)
 {
 	long	res;
-	int		sign;
 
 	res = 0;
-	sign = 1;
-	if (format[*i] == '+' || format[*i] == '-')
-		sign = ((format[(*i)++] % 43) * -1) + 1;
 	while (format[*i] && (format[*i] >= '0' && format[*i] <= '9'))
 		res = (res * 10) + (format[(*i)++]) - '0';
-	if (res * sign > INT_MAX || res * sign < INT_MIN)
+	if (res > INT_MAX)
 		return (0);
-	return (res * sign);
+	return (res);
 }
 
 static t_codes	parse_flags(const char *format, t_ft_printf *data, size_t *i)
@@ -80,11 +97,11 @@ static int	ft_parse_specifiers(const char *s, t_ft_printf *data, size_t *i)
 			return (CONVERSION);
 	}
 	if (s[*i] == 'c')
-		ft_putchar(va_arg(*(data->args), int), data);
+		char_arg(va_arg(*(data->args), int), data);
 	else if (s[*i] == 's')
-		ft_putstr(va_arg(*(data->args), char *), data);
+		str_arg(va_arg(*(data->args), char *), data);
 	else if (s[*i] == 'p')
-		ft_putpointer((unsigned long int)va_arg(*(data->args), void *), data);
+		ft_putpointer((size_t)va_arg(*(data->args), void *), data);
 	else if (s[*i] == 'd' || s[*i] == 'i')
 		ft_putnbr(va_arg(*(data->args), int), data);
 	else if (s[*i] == 'u')
@@ -94,7 +111,7 @@ static int	ft_parse_specifiers(const char *s, t_ft_printf *data, size_t *i)
 	else if (s[*i] == 'X')
 		ft_puthexa((unsigned int)va_arg(*(data->args), int), 1, data);
 	else if (s[*i] == '%')
-		ft_putchar('%', data);
+		ft_putstr("%", data);
 	else
 		return (CONVERSION);
 	return (0);

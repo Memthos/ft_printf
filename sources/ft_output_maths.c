@@ -6,13 +6,22 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/03 23:23:35 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:49:54 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/ft_printf.h"
 
-static void	ft_putpointer_address(unsigned long int ptr, t_ft_printf *data)
+static	size_t	get_hex_char_size(size_t nb)
+{
+	size_t	size;
+
+	if (nb < 15)
+		return (1);
+	return (1 + get_hex_char_size(nb / 16));
+}
+
+static void	ft_putpointer_address(size_t ptr, t_ft_printf *data)
 {
 	const char			base[] = "0123456789abcdef";
 
@@ -23,8 +32,9 @@ static void	ft_putpointer_address(unsigned long int ptr, t_ft_printf *data)
 	ft_putchar(base[ptr % 16], data);
 }
 
-void	ft_putpointer(unsigned long int ptr, t_ft_printf *data)
+void	ft_putpointer(size_t ptr, t_ft_printf *data)
 {
+	char	*s;
 	if (!ptr)
 	{
 		ft_putstr("(nil)", data);

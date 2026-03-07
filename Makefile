@@ -6,18 +6,28 @@ SRCS=ft_printf.c ft_output_maths.c ft_output_str.c
 OBJS=$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 SRCS_BONUS=ft_printf_bonus.c ft_printf_utils_bonus.c maths_utils_bonus.c \
 			conversions_bonus.c conversions_utils_bonus.c \
-			conversions_checks_bonus.c
+			conversions_checks_bonus.c ft_printf_print_bonus.c
 OBJS_BONUS=$(addprefix $(OBJS_DIR), $(SRCS_BONUS:.c=.o))
+LIBFT_PATH=libs/libft_tools/
+LIBFT=libs/libft_tools/libft_tools.a
 NAME=libftprintf.a
+BONUS=libftprintf_bonus.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+	$(NAME): $(OBJS) $(LIBFT)
+	@cp $(LIBFT) $(NAME)
 	@ar -rcs $@ $^
 	@echo "Finished compiling ft_printf"
 
-bonus: $(OBJS_BONUS)
-	@ar -rcs $(NAME) $^
+$(LIBFT):
+	@make -sC $(LIBFT_PATH) all
+
+bonus: $(BONUS)
+
+$(BONUS): $(OBJS_BONUS) $(LIBFT)
+	@cp $(LIBFT) $(BONUS)
+	@ar -rcs $(BONUS) $^
 	@echo "Finished compiling ft_printf bonuses"
 
 $(OBJS_DIR)%.o: %.c | $(OBJS_DIR)
@@ -28,10 +38,13 @@ $(OBJS_DIR):
 
 clean:
 	@rm -drf $(OBJS_DIR)
+	@make -sC $(LIBFT_PATH) clean
 	@echo "Cleaned ft_printf object files"
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(BONUS)
+	@make -sC $(LIBFT_PATH) fclean
 	@echo "Cleaned ft_printf"
 
 re: fclean all

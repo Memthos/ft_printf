@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 14:26:24 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:30:02 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ static int	set_flag(const char *format, t_ft_printf *data, size_t *i)
 static int	set_length(const char *format, t_ft_printf *data, size_t *i)
 {
 	if (format[*i] == '.' && data->flags.prec == -1)
-		data->flags.prec = get_number(format, ++(*i));
+	{
+		(*i)++;
+		data->flags.prec = get_number(format, i);
+	}
 	else if (format[*i] == '*' && data->flags.wdt == -1)
 		data->flags.wdt = va_arg(*(data->args), int);
-	else if (ft_is_digit(format[*i]) && !data->flags.wdt == -1)
+	else if (ft_isdigit(format[*i]) && data->flags.wdt == -1)
 		data->flags.wdt = get_number(format, i);
 	else
 		return (1);
@@ -44,7 +47,7 @@ static int	set_length(const char *format, t_ft_printf *data, size_t *i)
 
 static int	conversion(const char *s, t_ft_printf *data, size_t *i)
 {
-	data->flags = (t_flags){-1, -1, -1, -1, -1, -1, -1};
+	data->flags = (t_flags){0, 0, 0, 0, 0, 0, -1, -1};
 	while (s[*i] && (is_flag(s[*i])))
 	{
 		if (set_flag(s, data, i))
@@ -72,19 +75,22 @@ int	check_input(const char *format, va_list list)
 	size_t		i;
 
 	va_copy(copy, list);
-	data = (t_ft_printf){&copy, 0, 0, {-1, -1, -1, -1, -1, -1, -1}};
+	data = (t_ft_printf){&copy, 0, 0, {0, 0, 0, 0, 0, 0, -1, -1}};
 	i = 0;
-	while (format[i++] && !data.res)
+	while (format[i++])
 	{
 		if (format[i - 1] == '%')
 		{
 			if (conversion(format, &data, &i))
-				data.res = 1;
-			//print
+			{
+				va_end(copy);
+				return (1);
+			}
+			dummy_print(&data);
 		}
 	}
 	va_end(copy);
-	return (data.res);
+	return (0);
 }
 
 int	ft_printf(const char *format, ...)
@@ -97,7 +103,7 @@ int	ft_printf(const char *format, ...)
 		return (0);
 	i = 0;
 	va_start(args, format);
-	data = (t_ft_printf){&args, 0, 0, {-1, -1, -1, -1, -1, -1, -1}};
+	data = (t_ft_printf){&args, 0, 0, {0, 0, 0, 0, 0, 0, -1, -1}};
 	if (check_input(format, args))
 		return (-1);
 	while (!data.res && format[i++])
@@ -105,8 +111,7 @@ int	ft_printf(const char *format, ...)
 		if (format[i - 1] == '%')
 		{
 			conversion(format, &data, &i);
-			if (print)
-				return (-1);
+			print(&data);
 		}
 		else
 			ft_putchar(format[i - 1], &data);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conversions.c                                      :+:      :+:    :+:   */
+/*   conversions_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 13:20:37 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:29:33 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	pointer_arg(size_t ptr, t_ft_printf *data)
 	ft_putstr(s, data);
 	free(s);
 }
-
+#include <stdio.h>
 void	nb_arg(long nb, t_ft_printf *data)
 {
 	char	*s;
 	char	fill;
-	size_t	size;
+	int		size;
 
 	size = 0;
 	if ((data->flags.sign && nb > 0) || data->flags.space)
@@ -91,7 +91,7 @@ void	nb_arg(long nb, t_ft_printf *data)
 		return ;
 	}
 	set_nb_prefix(s, &nb, data);
-	set_dec_value(s + size, nb, get_dec_size(nb) + size, data);
+	set_dec_value(s + size, nb, get_dec_size(nb) + size - 1, data);
 	if (apply_precision_nb(&s, data))
 		return ;
 	if (data->flags.zero)
@@ -101,14 +101,14 @@ void	nb_arg(long nb, t_ft_printf *data)
 	if (apply_width(&s, fill, data))
 		return ;
 	ft_putstr(s, data);
-	free(data);
+	free(s);
 }
 
 void	hex_arg(size_t nb, t_ft_printf *data)
 {
 	char	*s;
 	char	fill;
-	size_t	size;
+	int		size;
 
 	size = 0;
 	if (data->flags.alt)
@@ -119,8 +119,8 @@ void	hex_arg(size_t nb, t_ft_printf *data)
 		data->res = 1;
 		return ;
 	}
-	set_nb_prefix(s, nb, data);
-	set_hex_value(s, nb, get_hex_size(nb), data);
+	set_nb_prefix(s, 0, data);
+	set_hex_value(s + size, nb, get_hex_size(nb) + size - 1, data);
 	if (apply_precision_nb(&s, data))
 		return ;
 	if (data->flags.zero)
@@ -130,5 +130,5 @@ void	hex_arg(size_t nb, t_ft_printf *data)
 	if (apply_width(&s, fill, data))
 		return ;
 	ft_putstr(s, data);
-	free(data);
+	free(s);
 }

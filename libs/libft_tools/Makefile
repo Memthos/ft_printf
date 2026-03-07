@@ -27,12 +27,10 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 
 clean:
 	@rm -drf $(OBJS_DIR)
-	@make -sC $(FTPRINTF_DIR) clean
 	@echo "Cleaned libft object files"
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -sC $(FTPRINTF_DIR) fclean
 	@echo "Cleaned libft"
 
 re: fclean all

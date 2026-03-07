@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 14:26:15 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:28:09 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ typedef struct s_ft_printf
 
 int		ft_printf(const char *format, ...);
 
+void	print(t_ft_printf *data);
+void	dummy_print(t_ft_printf *data);
+
 void	set_nb_prefix(char *s, long *nb, t_ft_printf *data);
-size_t	get_hex_size(size_t nb);
-size_t	get_dec_size(long nb);
+int		get_hex_size(size_t nb);
+int		get_dec_size(long nb);
 void	set_hex_value(char *s, size_t nb, size_t cur, t_ft_printf *data);
 void	set_dec_value(char *s, long nb, size_t cur, t_ft_printf *data);
 
@@ -56,7 +59,7 @@ void	hex_arg(size_t nb, t_ft_printf *data);
 
 void	ft_putchar(char c, t_ft_printf *data);
 void	ft_putstr(char *s, t_ft_printf *data);
-int		get_number(const char *format, int *i);
+int		get_number(const char *format, size_t *i);
 
 int		apply_width(char **src, char fill, t_ft_printf *data);
 int		apply_precision_nb(char **src, t_ft_printf *data);

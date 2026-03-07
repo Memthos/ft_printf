@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:35:14 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 13:24:06 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 20:55:17 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_putstr(char *s, t_ft_printf *data)
 		ft_putchar(s[i++], data);
 }
 
-int	get_number(const char *format, int *i)
+int	get_number(const char *format, size_t *i)
 {
 	long	res;
 

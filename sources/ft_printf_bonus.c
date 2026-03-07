@@ -6,139 +6,111 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/06 15:49:05 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:26:24 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_printf_bonus.h"
+#include "../includes/ft_printf_bonus.h"
 
-void	ft_putstr(char *s, t_ft_printf *data)
+static int	set_flag(const char *format, t_ft_printf *data, size_t *i)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-	{
-		ft_putstr("(null)", data);
-		return ;
-	}
-	while (s[i])
-	{
-		if (write(1, s[i++], 1) == -1)
-		{
-			data->res = 1;
-			break ;
-		}
-		data->printed += 1;
-	}
-}
-
-static int	is_flag(char c)
-{
-	if (c == '-' || c == '0' || c == '.' || c == '#' || c == ' ' || c == '+')
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-static void	set_flag(size_t	*param, int value, size_t *idx)
-{
-	*param = (size_t)value;
-	(*idx)++;
-}
-
-int	ft_atoi(const char *format, int *i)
-{
-	long	res;
-
-	res = 0;
-	while (format[*i] && (format[*i] >= '0' && format[*i] <= '9'))
-		res = (res * 10) + (format[(*i)++]) - '0';
-	if (res > INT_MAX)
-		return (0);
-	return (res);
-}
-
-static t_codes	parse_flags(const char *format, t_ft_printf *data, size_t *i)
-{
-	if (format[*i] == '-')
-		set_flag(&data->flags.left, 1, i);
-	else if (format[*i] == '0')
-		set_flag(&data->flags.zero, 1, i);
-	else if (format[*i] == '.')
-		data->flags.prec = ft_atoi(format, ++(*i));
-	else if (format[*i] == '#')
-		set_flag(&data->flags.alt, 1, i);
-	else if (format[*i] == '+')
-		set_flag(&data->flags.sign, 1, i);
-	else if (format[*i] == ' ')
-		set_flag(&data->flags.space, 1, i);
-	else if (format[*i] == '*')
-		set_flag(&data->flags.wdt, va_arg(*(data->args), int), i);
-	else if (ft_is_digit(format[*i]))
-	{
-		if (data->flags.wdt != 0)
-			return (CONVERSION);
-		data->flags.wdt = ft_atoi(format, i);
-	}
-	if (is_flag(format[*i]) || (data->flags.left && data->flags.zero)
-			|| (data->flags.sign && data->flags.space))
-		return (CONVERSION);
-	return (SUCCESS);
-}
-
-static int	ft_parse_specifiers(const char *s, t_ft_printf *data, size_t *i)
-{
-	data->flags = (t_flags){0, 0, 0, 0, 0, 0, 0};
-	while (s[*i] && is_flag(s[*i]))
-	{
-		if (parse_flags(s, data, i))
-			return (CONVERSION);
-	}
-	if (s[*i] == 'c')
-		char_arg(va_arg(*(data->args), int), data);
-	else if (s[*i] == 's')
-		str_arg(va_arg(*(data->args), char *), data);
-	else if (s[*i] == 'p')
-		ft_putpointer((size_t)va_arg(*(data->args), void *), data);
-	else if (s[*i] == 'd' || s[*i] == 'i')
-		ft_putnbr(va_arg(*(data->args), int), data);
-	else if (s[*i] == 'u')
-		ft_putnbr_unsigned(va_arg(*(data->args), unsigned int), data);
-	else if (s[*i] == 'x')
-		ft_puthexa((unsigned int)va_arg(*(data->args), int), 0, data);
-	else if (s[*i] == 'X')
-		ft_puthexa((unsigned int)va_arg(*(data->args), int), 1, data);
-	else if (s[*i] == '%')
-		ft_putstr("%", data);
+	if (format[*i] == '-' && !data->flags.left)
+		data->flags.left = 1;
+	else if (format[*i] == '+' && !data->flags.sign)
+		data->flags.sign = 1;
+	else if (format[*i] == ' ' && !data->flags.space)
+		data->flags.space = 1;
+	else if (format[*i] == '#' && !data->flags.alt)
+		data->flags.alt = 1;
+	else if (format[*i] == '0' && !data->flags.zero)
+		data->flags.zero = 1;
 	else
-		return (CONVERSION);
+		return (1);
 	return (0);
+}
+
+static int	set_length(const char *format, t_ft_printf *data, size_t *i)
+{
+	if (format[*i] == '.' && data->flags.prec == -1)
+		data->flags.prec = get_number(format, ++(*i));
+	else if (format[*i] == '*' && data->flags.wdt == -1)
+		data->flags.wdt = va_arg(*(data->args), int);
+	else if (ft_is_digit(format[*i]) && !data->flags.wdt == -1)
+		data->flags.wdt = get_number(format, i);
+	else
+		return (1);
+	return (0);
+}
+
+static int	conversion(const char *s, t_ft_printf *data, size_t *i)
+{
+	data->flags = (t_flags){-1, -1, -1, -1, -1, -1, -1};
+	while (s[*i] && (is_flag(s[*i])))
+	{
+		if (set_flag(s, data, i))
+			return (1);
+		(*i)++;
+	}
+	while (s[*i] && is_length(s[*i]))
+	{
+		if (set_length(s, data, i))
+			return (1);
+		(*i)++;
+	}
+	if (!is_conversion(s[*i]))
+		return (1);
+	data->flags.conv = s[(*i)++];
+	if (conversion_check(data))
+		return (1);
+	return (0);
+}
+
+int	check_input(const char *format, va_list list)
+{
+	t_ft_printf	data;
+	va_list		copy;
+	size_t		i;
+
+	va_copy(copy, list);
+	data = (t_ft_printf){&copy, 0, 0, {-1, -1, -1, -1, -1, -1, -1}};
+	i = 0;
+	while (format[i++] && !data.res)
+	{
+		if (format[i - 1] == '%')
+		{
+			if (conversion(format, &data, &i))
+				data.res = 1;
+			//print
+		}
+	}
+	va_end(copy);
+	return (data.res);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	t_ft_printf	data;
-	va_list		args_list;
+	va_list		args;
 	size_t		i;
 
 	if (!format)
 		return (0);
 	i = 0;
-	va_start(args_list, format);
-	data = (t_ft_printf){&args_list, 0, 0, {0, 0, 0, 0, 0, 0, 0}};
-	while (!data.res && format[i])
+	va_start(args, format);
+	data = (t_ft_printf){&args, 0, 0, {-1, -1, -1, -1, -1, -1, -1}};
+	if (check_input(format, args))
+		return (-1);
+	while (!data.res && format[i++])
 	{
-		if (format[i] == '%')
+		if (format[i - 1] == '%')
 		{
-			i++;
-			if (!ft_parse_specifiers(format, &data, &i))
-				i++;
+			conversion(format, &data, &i);
+			if (print)
+				return (-1);
 		}
 		else
-			ft_putchar(format[i++], &data);
+			ft_putchar(format[i - 1], &data);
 	}
-	va_end(args_list);
+	va_end(args);
 	return (data.printed);
 }

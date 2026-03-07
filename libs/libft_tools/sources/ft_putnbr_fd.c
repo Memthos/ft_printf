@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_output_str.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 14:46:55 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/03 22:52:51 by mperrine         ###   ########.fr       */
+/*   Created: 2025/10/20 13:17:22 by mperrine          #+#    #+#             */
+/*   Updated: 2026/02/08 12:29:10 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_printf.h"
+#include "../includes/libft.h"
 
-void	ft_putchar(char c, t_ft_printf *data)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (data->res)
+	if (fd < 0)
 		return ;
-	if (write(1, &c, 1) == -1)
-		data->res = 1;
-	data->printed += 1;
-}
-
-void	ft_putstr(char *s, t_ft_printf *data)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
+	if (n == -2147483648)
 	{
-		ft_putstr("(null)", data);
+		write(fd, "-2147483648", 11);
 		return ;
 	}
-	while (!data->res && s[i])
-		ft_putchar(s[i++], data);
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
+	else
+		ft_putchar_fd(n + 48, fd);
 }

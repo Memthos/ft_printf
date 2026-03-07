@@ -4,7 +4,9 @@ VPATH=sources
 OBJS_DIR=objects/
 SRCS=ft_printf.c ft_output_maths.c ft_output_str.c
 OBJS=$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
-SRCS_BONUS=ft_printf_bonus.c ft_output_maths_bonus.c ft_output_str_bonus.c
+SRCS_BONUS=ft_printf_bonus.c ft_printf_utils_bonus.c maths_utils_bonus.c \
+			conversions_bonus.c conversions_utils_bonus.c \
+			conversions_checks_bonus.c
 OBJS_BONUS=$(addprefix $(OBJS_DIR), $(SRCS_BONUS:.c=.o))
 NAME=libftprintf.a
 

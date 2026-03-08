@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 23:30:02 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:11:33 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_printf.h"
 
 static int	set_flag(const char *format, t_ft_printf *data, size_t *i)
 {
@@ -37,7 +37,10 @@ static int	set_length(const char *format, t_ft_printf *data, size_t *i)
 		data->flags.prec = get_number(format, i);
 	}
 	else if (format[*i] == '*' && data->flags.wdt == -1)
+	{
 		data->flags.wdt = va_arg(*(data->args), int);
+		(*i)++;
+	}
 	else if (ft_isdigit(format[*i]) && data->flags.wdt == -1)
 		data->flags.wdt = get_number(format, i);
 	else
@@ -58,7 +61,6 @@ static int	conversion(const char *s, t_ft_printf *data, size_t *i)
 	{
 		if (set_length(s, data, i))
 			return (1);
-		(*i)++;
 	}
 	if (!is_conversion(s[*i]))
 		return (1);

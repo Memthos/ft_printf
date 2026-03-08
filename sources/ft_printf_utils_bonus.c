@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:35:14 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 20:55:17 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:06:29 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_printf.h"
 
 void	ft_putchar(char c, t_ft_printf *data)
 {
@@ -22,12 +22,26 @@ void	ft_putchar(char c, t_ft_printf *data)
 	data->printed += 1;
 }
 
+static int	get_str_size(char *s, t_ft_printf *data)
+{
+	int	size;
+
+	size = ft_strlen(s);
+	if (data->flags.wdt > size)
+		size = data->flags.wdt;
+	if (data->flags.prec > size)
+		size = data->flags.prec;
+	return (size);
+}
+
 void	ft_putstr(char *s, t_ft_printf *data)
 {
 	int	i;
+	int	size;
 
 	i = 0;
-	while (s[i] && !data->res)
+	size = get_str_size(s, data);
+	while (i < size && !data->res)
 		ft_putchar(s[i++], data);
 }
 

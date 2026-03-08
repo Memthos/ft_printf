@@ -10,8 +10,8 @@ SRCS_BONUS=ft_printf_bonus.c ft_printf_utils_bonus.c maths_utils_bonus.c \
 OBJS_BONUS=$(addprefix $(OBJS_DIR), $(SRCS_BONUS:.c=.o))
 LIBFT_PATH=libs/libft_tools/
 LIBFT=libs/libft_tools/libft_tools.a
-NAME=libftprintf.a
-BONUS=libftprintf_bonus.a
+NAME=libftprintfa.a
+BONUS=libftprintf.a
 
 all: $(NAME)
 

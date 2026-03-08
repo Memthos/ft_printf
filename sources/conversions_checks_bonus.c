@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:23:49 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 20:59:45 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:34:28 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_printf.h"
 
 int	conversion_check(t_ft_printf *data)
 {

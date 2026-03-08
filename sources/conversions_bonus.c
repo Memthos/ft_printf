@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 23:29:33 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:02:43 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_printf.h"
 
 void	char_arg(char c, t_ft_printf *data)
 {
@@ -23,7 +23,7 @@ void	char_arg(char c, t_ft_printf *data)
 		return ;
 	}
 	s[0] = c;
-	if (apply_width(&s, ' ', data))
+	if (apply_width(&s, ' ', 1, data))
 		return ;
 	ft_putstr(s, data);
 	free(s);
@@ -46,7 +46,7 @@ void	str_arg(char *str, t_ft_printf *data)
 	}
 	if (apply_precision_str(&s, data))
 		return ;
-	if (apply_width(&s, ' ', data))
+	if (apply_width(&s, ' ', ft_strlen(s), data))
 		return ;
 	ft_putstr(s, data);
 	free(s);
@@ -67,14 +67,14 @@ void	pointer_arg(size_t ptr, t_ft_printf *data)
 		data->res = 1;
 		return ;
 	}
-	ft_strlcpy(s, "0x", 3);
+	ft_strncpy(s, "0x", 2);
 	set_hex_value(s + 2, ptr, get_hex_size(ptr) + 1, data);
-	if (apply_width(&s, ' ', data))
+	if (apply_width(&s, ' ', ft_strlen(s), data))
 		return ;
 	ft_putstr(s, data);
 	free(s);
 }
-#include <stdio.h>
+
 void	nb_arg(long nb, t_ft_printf *data)
 {
 	char	*s;
@@ -98,7 +98,7 @@ void	nb_arg(long nb, t_ft_printf *data)
 		fill = '0';
 	else
 		fill = ' ';
-	if (apply_width(&s, fill, data))
+	if (apply_width(&s, fill, ft_strlen(s), data))
 		return ;
 	ft_putstr(s, data);
 	free(s);
@@ -127,7 +127,7 @@ void	hex_arg(size_t nb, t_ft_printf *data)
 		fill = '0';
 	else
 		fill = ' ';
-	if (apply_width(&s, fill, data))
+	if (apply_width(&s, fill, ft_strlen(s), data))
 		return ;
 	ft_putstr(s, data);
 	free(s);

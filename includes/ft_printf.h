@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 23:28:09 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 00:46:08 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+
+#include <stdio.h>
 
 # include "../libs/libft_tools/includes/libft.h"
 
@@ -61,7 +63,7 @@ void	ft_putchar(char c, t_ft_printf *data);
 void	ft_putstr(char *s, t_ft_printf *data);
 int		get_number(const char *format, size_t *i);
 
-int		apply_width(char **src, char fill, t_ft_printf *data);
+int		apply_width(char **src, char fill, int srclen, t_ft_printf *data);
 int		apply_precision_nb(char **src, t_ft_printf *data);
 int		apply_precision_str(char **src, t_ft_printf *data);
 

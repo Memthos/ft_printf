@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/07 23:27:52 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:02:07 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_printf.h"
 
 void	set_nb_prefix(char *s, long *nb, t_ft_printf *data)
 {
@@ -26,9 +26,9 @@ void	set_nb_prefix(char *s, long *nb, t_ft_printf *data)
 	else if (data->flags.alt)
 	{
 		if (data->flags.conv == 'x')
-			ft_strlcpy(s, "0x", 3);
+			ft_strncpy(s, "0x", 2);
 		else
-			ft_strlcpy(s, "0X", 3);
+			ft_strncpy(s, "0X", 2);
 	}
 }
 

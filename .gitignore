@@ -1,4 +1,4 @@
 # Library
 libftprintf.a
 # Object files
-*.o
+objs

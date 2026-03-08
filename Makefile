@@ -1,21 +1,20 @@
 CC=gcc
 CFLAGS=-Werror -Wall -Wextra
-VPATH=sources
-OBJS_DIR=objects/
-SRCS=ft_printf.c ft_output_maths.c ft_output_str.c
+VPATH=srcs
+OBJS_DIR=objs/
+SRCS=conversions.c ft_printf.c ft_printf_utils.c
 OBJS=$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
-SRCS_BONUS=ft_printf_bonus.c ft_printf_utils_bonus.c maths_utils_bonus.c \
-			conversions_bonus.c conversions_utils_bonus.c \
-			conversions_checks_bonus.c ft_printf_print_bonus.c
+SRCS_BONUS=conversions_bonus.c conversions_checks_bonus.c \
+			conversions_utils_bonus.c ft_printf_bonus.c \
+			ft_printf_utils_bonus.c maths_utils_bonus.c
 OBJS_BONUS=$(addprefix $(OBJS_DIR), $(SRCS_BONUS:.c=.o))
 LIBFT_PATH=libs/libft_tools/
 LIBFT=libs/libft_tools/libft_tools.a
-NAME=libftprintfa.a
-BONUS=libftprintf.a
+NAME=libftprintf.a
 
 all: $(NAME)
 
-	$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT)
 	@cp $(LIBFT) $(NAME)
 	@ar -rcs $@ $^
 	@echo "Finished compiling ft_printf"
@@ -23,11 +22,12 @@ all: $(NAME)
 $(LIBFT):
 	@make -sC $(LIBFT_PATH) all
 
-bonus: $(BONUS)
+bonus: $(OBJS_DIR).bonus
 
-$(BONUS): $(OBJS_BONUS) $(LIBFT)
-	@cp $(LIBFT) $(BONUS)
-	@ar -rcs $(BONUS) $^
+$(OBJS_DIR).bonus: $(OBJS_BONUS) $(LIBFT)
+	@cp $(LIBFT) $(NAME)
+	@ar -rcs $(NAME) $^
+	@touch $(OBJS_DIR).bonus
 	@echo "Finished compiling ft_printf bonuses"
 
 $(OBJS_DIR)%.o: %.c | $(OBJS_DIR)

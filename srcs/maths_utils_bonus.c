@@ -6,20 +6,20 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 01:02:07 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:51:31 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../includes/ft_printf_bonus.h"
 
-void	set_nb_prefix(char *s, long *nb, t_ft_printf *data)
+void	set_nb_prefix(char *s, long nb, t_ft_printf *data)
 {
-	if (data->flags.sign)
-		s[0] = '+';
-	else if (*nb < 0)
+	if (data->flags.sign || nb < 0)
 	{
-		*nb = -(*nb);
-		s[0] = '-';
+		if (nb < 0)
+			s[0] = '-';
+		else
+			s[0] = '+';
 	}
 	else if (data->flags.space)
 		s[0] = ' ';
@@ -41,21 +41,17 @@ int	get_hex_size(size_t nb)
 
 int	get_dec_size(long nb)
 {
-	int	sign;
-
-	sign = 0;
 	if (nb < 0)
-	{
-		sign = 1;
 		nb = -nb;
-	}
 	if (nb < 10)
 		return (1);
-	return (1 + sign + get_dec_size(nb / 10));
+	return (1 + get_dec_size(nb / 10));
 }
 
 void	set_dec_value(char *s, long nb, size_t cur, t_ft_printf *data)
 {
+	if (nb < 0)
+		nb = -nb;
 	if (nb > 9)
 		set_dec_value(s, nb / 10, cur - 1, data);
 	s[cur] = nb % 10 + '0';

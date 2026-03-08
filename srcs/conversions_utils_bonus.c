@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:23:28 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 22:49:49 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/09 00:58:02 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int	apply_precision_nb(char **src, int prefix, t_ft_printf *data)
 	int		srclen;
 
 	srclen = (int)ft_strlen(*src);
+	if (srclen == 1 && (*src)[0] == '0' && data->flags.prec == 0)
+	{
+		(*src)[0] = '\0';
+		return (0);
+	}
 	if (data->flags.prec == -1 || data->flags.prec <= srclen - prefix)
 		return (0);
 	dest = calloc(data->flags.prec + prefix + 1, sizeof(char));

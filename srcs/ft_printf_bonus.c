@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:18:51 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/09 00:32:41 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ static int	set_length(const char *format, t_ft_printf *data, size_t *add)
 	if (format[*add] == '.' && data->flags.prec == -1)
 	{
 		(*add)++;
-		data->flags.prec = get_number(format, add);
+		if (format[*add] == '*')
+		{
+			data->flags.prec = va_arg(*(data->args), int);
+			(*add)++;
+		}
+		else
+			data->flags.prec = get_number(format, add);
 	}
 	else if (format[*add] == '*' && data->flags.wdt == -1)
 	{

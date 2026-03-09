@@ -43,7 +43,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f $(BONUS)
 	@make -sC $(LIBFT_PATH) fclean
 	@echo "Cleaned ft_printf"
 

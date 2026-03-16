@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 16:35:14 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:26:00 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 13:13:57 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 void	ft_putchar(char c, t_ft_printf *data)
 {

@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/09 00:32:41 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 13:16:34 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "ft_printf_bonus.h"
 
 static void	print(t_ft_printf *data)
 {
@@ -104,7 +104,7 @@ int	ft_printf(const char *format, ...)
 	size_t		i;
 
 	if (!format)
-		return (0);
+		return (-1);
 	i = 0;
 	va_start(args, format);
 	data = (t_ft_printf){&args, 0, 0, {0, 0, 0, 0, 0, 0, -1, -1}};

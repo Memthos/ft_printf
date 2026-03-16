@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:23:28 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/09 00:58:02 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 13:13:57 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "ft_printf_bonus.h"
 
 static void	apply_width(char *dest, char *src, int lens[2], t_ft_printf *data)
 {

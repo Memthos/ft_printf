@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:54:07 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 13:13:57 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 void	str_arg(char *str, t_ft_printf *data)
 {

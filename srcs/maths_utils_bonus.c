@@ -6,11 +6,11 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:33:24 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:51:31 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 13:13:57 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf_bonus.h"
+#include "ft_printf_bonus.h"
 
 void	set_nb_prefix(char *s, long nb, t_ft_printf *data)
 {

@@ -1,6 +1,7 @@
 CC=gcc
-CFLAGS=-Werror -Wall -Wextra
+CFLAGS=-Werror -Wall -Wextra -I $(INCLUDES)
 VPATH=srcs
+INCLUDES=includes/
 OBJS_DIR=objs/
 SRCS=conversions.c ft_printf.c ft_printf_utils.c
 OBJS=$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
@@ -31,7 +32,7 @@ $(OBJS_DIR).bonus: $(OBJS_BONUS) $(LIBFT)
 	@echo "Finished compiling ft_printf bonuses"
 
 $(OBJS_DIR)%.o: %.c | $(OBJS_DIR)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)

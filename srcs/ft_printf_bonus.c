@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 00:34:05 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/16 13:16:34 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:12:35 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ static void	print(t_ft_printf *data)
 
 static int	set_flag(const char c, t_ft_printf *data)
 {
-	if (c == '-' && !data->flags.left)
+	if (c == '-')
 		data->flags.left = 1;
-	else if (c == '+' && !data->flags.sign)
+	else if (c == '+')
 		data->flags.sign = 1;
-	else if (c == ' ' && !data->flags.space)
+	else if (c == ' ')
 		data->flags.space = 1;
-	else if (c == '#' && !data->flags.alt)
+	else if (c == '#')
 		data->flags.alt = 1;
-	else if (c == '0' && !data->flags.zero)
+	else if (c == '0')
 		data->flags.zero = 1;
 	else
 		return (1);

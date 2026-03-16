@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:23:28 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/16 13:13:57 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:15:27 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	apply_width(char *dest, char *src, int lens[2], t_ft_printf *data)
 		else
 		{
 			ft_memset(dest, ' ', data->flags.wdt - lens[1]);
-			ft_strlcat(dest, src, data->flags.wdt - lens[1] + 1);
+			ft_strlcat(dest, src, data->flags.wdt - lens[1] + lens[0] + 1);
 		}
 		ft_strlcat(dest, src + lens[0], data->flags.wdt + 1);
 	}

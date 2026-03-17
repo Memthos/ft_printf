@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:17:26 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/17 10:03:44 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <limits.h>
 
-# include "../libs/libft_tools/includes/libft.h"
+#include "utils.h"
 
 typedef struct s_flags
 {

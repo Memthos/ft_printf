@@ -6,7 +6,7 @@
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:17 by mperrine          #+#    #+#             */
-/*   Updated: 2026/03/08 23:39:44 by mperrine         ###   ########.fr       */
+/*   Updated: 2026/03/17 10:03:51 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# include "../libs/libft_tools/includes/libft.h"
+#include "utils.h"
 
 typedef struct s_ft_printf
 {

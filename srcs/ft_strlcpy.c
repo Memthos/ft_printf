@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mperrine <mperrine@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/15 14:41:53 by mperrine          #+#    #+#             */
-/*   Updated: 2026/02/08 12:29:10 by mperrine         ###   ########.fr       */
+/*   Created: 2025/10/14 10:09:30 by mperrine          #+#    #+#             */
+/*   Updated: 2026/03/17 10:04:34 by mperrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "utils.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	void	*mem;
+	size_t	i;
+	size_t	srclen;
 
-	if (nmemb == 0 || size == 0)
+	srclen = ft_strlen(src);
+	if (size < 1)
+		return (srclen);
+	i = 0;
+	while (i < size - 1 && src[i])
 	{
-		mem = (void *) malloc(0);
-		if (mem == NULL)
-			return (NULL);
-		return (mem);
+		dest[i] = src[i];
+		i++;
 	}
-	if (nmemb > (size_t) -1 / size)
-		return (NULL);
-	mem = (void *) malloc(nmemb * size);
-	if (mem == NULL)
-		return (NULL);
-	ft_bzero(mem, nmemb * size);
-	return (mem);
+	dest[i] = '\0';
+	return (srclen);
 }

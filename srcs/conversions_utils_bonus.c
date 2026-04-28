@@ -41,7 +41,7 @@ int	width_base(char **src, int prefix, int srclen, t_ft_printf *data)
 
 	if (data->flags.wdt <= srclen)
 		return (0);
-	dest = calloc(data->flags.wdt + 1, sizeof(char));
+	dest = ft_calloc(data->flags.wdt + 1, sizeof(char));
 	if (!dest)
 	{
 		free(*src);
@@ -67,7 +67,7 @@ int	apply_precision_nb(char **src, int prefix, t_ft_printf *data)
 	}
 	if (data->flags.prec == -1 || data->flags.prec <= srclen - prefix)
 		return (0);
-	dest = calloc(data->flags.prec + prefix + 1, sizeof(char));
+	dest = ft_calloc(data->flags.prec + prefix + 1, sizeof(char));
 	if (!dest)
 	{
 		free(*src);
@@ -88,7 +88,7 @@ int	apply_precision_str(char **src, t_ft_printf *data)
 
 	if (data->flags.prec == -1 || data->flags.prec >= (int)ft_strlen(*src))
 		return (0);
-	dest = calloc(data->flags.prec + 1, sizeof(char));
+	dest = ft_calloc(data->flags.prec + 1, sizeof(char));
 	if (!dest)
 	{
 		free(*src);
